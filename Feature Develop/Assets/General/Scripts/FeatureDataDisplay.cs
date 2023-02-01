@@ -35,5 +35,5 @@ public class FeatureDataDisplay : MonoBehaviour
 	}
 
 	//Load the current scene ID
-	public void LoadFeatureScene() {SceneManager.LoadScene(curDisplay.featureScene.name, LoadSceneMode.Single);}
+	public void LoadFeatureScene() {SceneManager.LoadScene(curDisplay.sceneName, LoadSceneMode.Single);}
 }
