@@ -16,15 +16,15 @@ public class Pooler : MonoBehaviour
 	[Serializable] public class Pool 
 	{
 		public string key; 
-		public List<GameObject> pool;
+		public List<GameObject> objs;
 
 		public Pool(string key)
 		{
 			this.key = key;
-			this.pool = new List<GameObject>();
+			this.objs = new List<GameObject>();
 		}
-	} 
-	[SerializeField] List<Pool> poolGroup = new List<Pool>(); 
+	}
+	[SerializeField] List<Pool> pools = new List<Pool>(); 
 
 	//Create the object needed with wanted position, rotation, does it auto active upon create? and do it need to has parent?
 	public GameObject Create(GameObject need, Vector3 position, Quaternion rotation, bool autoActive = true, Transform parent = null)
@@ -33,10 +33,10 @@ public class Pooler : MonoBehaviour
 		string neededKey = need.name + "(Clone)";
 		
 		//Create an new pool for the needed key if it haven't exist
-		if(GetPool(neededKey) == null) poolGroup.Add(new Pool(neededKey));
+		if(FindPool(neededKey) == null) pools.Add(new Pool(neededKey));
 
 		//Get the pool to be use of needed key
-		List<GameObject> use = GetPool(neededKey);
+		List<GameObject> use = FindPool(neededKey).objs;
 
 		//If the use pool has object then go through all of it object
 		if(use.Count > 0) {for (int o = 0; o < use.Count; o++)
@@ -78,14 +78,14 @@ public class Pooler : MonoBehaviour
 		return newObj;
 	}
 
-	//Return the object pool of given key
-	public List<GameObject> GetPool(string poolKey) 
+	//Return the pool of given key
+	public Pool FindPool(string poolKey) 
 	{
 		//Go through all the pool
-		for (int p = 0; p < poolGroup.Count; p++)
+		for (int p = 0; p < pools.Count; p++)
 		{
 			//Return the pool that it key match the given key
-			if(poolGroup[p].key == poolKey) return poolGroup[p].pool;
+			if(pools[p].key == poolKey) return pools[p];
 		}
 		//Return nothing if no key match
 		return null;
