@@ -90,4 +90,23 @@ public class Pooler : MonoBehaviour
 		//Return nothing if no key match
 		return null;
 	}
+	
+	public void DestroyPool(string poolKey)
+	{
+		Pool finded = FindPool(poolKey);
+		if(finded != null)
+		{
+			//Destroy all object of the finded pool
+			for (int o = 0; o < finded.objs.Count; o++) Destroy(finded.objs[o]);
+			//Clear the object list
+			finded.objs.Clear();
+			//Remove finded pool from pool
+			pools.Remove(finded);
+		}
+		else
+		{
+			//Send an warning
+			Debug.LogWarning("There no pool for key " + poolKey);
+		}
+	}
 }
