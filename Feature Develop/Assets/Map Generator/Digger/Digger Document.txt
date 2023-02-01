@@ -1,0 +1,73 @@
+(+ Function | > Action | "" Variable | ? Possible | $ Condition | ... Description | @ Contain)
+Setup:
+	+ "Config":
+		... The group of variables that will send to process for dig.
+		@ Amount of plot needed.
+		@ The position it will begin to dig.
+		@ The chance for miner to dig in ANY|EACH direction.
+		@ The minimum amount and maximum amount allow for miner to dig in direction.
+		@ The list of plot has been dig ("DigPlot").
+		@ The list of miner currently dig ("DigPlot").
+	+ "DigPlot":
+		... The group of variables contain data use to dig.
+		@ Everything inside "PlotData" + "PlotNeighbor".
+		@ The time it dig as miner.
+		@ The available direction for miner to dig.
+		@ The direction it has use to bypass.
+	> When need to dig send "Config" to process that handle digging.
+		
+Process: 
+	+ Create Plot:
+		> The "plot" that handle digging an new "plot" will know as "miner".
+		> The "miner" will decide an random direction to dig an new "plot".
+		> The newly dig "plot" will be know as the new "miner"...
+		? If during dig the following condition meet:
+			$ All 4 direction of "miner" are fill. 
+			$ Still need more "plot".
+			> Choose an random direction and bypass them until no longer on fill "plot".
+			> Set "miner" from there...
+
+	+ Decide Neighbor:
+		> An "plot" has list of 4 "neighbor" for each direction.
+		> Each "neighbor" will has "digByThis" and "hasDig":
+			digByThis = This "neighbor" has been dig by this "plot".
+			hasDig    = This "neighbor" has been dig.
+		> When an "miner" during an new "plot" it will mark that newly dig as "digByThis" in it "neighbor".
+		> Go through all the "plot" to check 4 direction of that "plot".
+		> If there is dug "plot" in that direction then mark it as "hasDig" in it "neighbor".
+		> When check "neighbor" the "plot" will also store that "neighbor" important data.
+
+	# Building Rooms:
+		+ Building Bridge:
+			> Go through all the "plot" then get "connection" for each of them to "bridge".
+			> How to get "connection" are depend on what mode the user choose:
+				? Adjacent   = All "plot" will has bridge connect to it "neighbor".
+				? Generation = "Bridge" will connect base on how it was dig.
+				? Randomize  = "Plot" will randomly choose an "neighbor" to "bridge" to.
+			> Check if all it "connection" has get are "hasDig" and it not duplicate.
+			> Format "bridge" such as it position, scaling, etc... for all "connection" has get.
+			> Buid "bridge" using format info.
+			> Create "railing" at bridge position modify with half of bridge width and wall thick.
+			> "Railing" modify and scale are base on direction of bridge it create.
+
+		+ Building Floor:
+			> Create "floor" object on each "plot".
+			> Check through each "plot" "neighbor" to create "barrier".
+			> Create "barrier" when there is not an "neighbor".
+			? Create "barrier" when there is an "neighbor".
+			> If "neighbor" have "bridge".
+			> Beign build "barrier" that act as "gate"
+			> Align "gate" to be middle between "bridge" edge and "floor" edge on each side.
+			? If an "barrier" poke into floor (when not barricade "neighbor"):
+				> Cut the part that poke in
+				> Move it in the opposite direction it poke.
+				
+	# Building Lands:
+		+ WIP
+		
+Limit & Bugs: ( (X) important)
+- (1) Only support square floor.
+- (8) wall work with an single stretch object.
+- (4) Auto scale don't affect gate.
+- (5) Can't edit barrier and railing length individual.	
+- (3) 100% dig chance randomly stop? (could fix by just using minimum contraint)
