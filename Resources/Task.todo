@@ -1,0 +1,20 @@
+✓ Keybinder
+	✓ Reflection
+	X Arrays
+▪ Procedural Map Generation 
+	✓ Digger 
+	▪ Placer
+	▪ Binary Space Partitioning - BSP
+	▪ Cellular Automata - CA
+	▪ Wave Function Collapse - WFC
+▪ My Effects
+	✓ Electric Line
+	▪ Thunder Line
+	▪ Wavelength Line
+✓ A* Pathfindidng
+▪ Pixel Perfect Gameview
+▪ Inverse Kinematic 
+
+More:
+	▪ Host on github page
+	✓ Add title bar above feature demo
