@@ -4,5 +4,26 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/General/Main Menu.unity
+    guid: e4507fee108cedb4cb5a4a752ed9157e
+  - enabled: 1
+    path: Assets/Entity Controls/Demo/Entity Controls_Demo.unity
+    guid: 82fe5561a66d9f545ae7e8ad9f879e07
+  - enabled: 1
+    path: Assets/My Effects/Demo/My Effects_Demo.unity
+    guid: cb647e4e52d5123489a2d24d36133aa1
+  - enabled: 1
+    path: Assets/Map Generator/Map Generator_Demo.unity
+    guid: f7bea791b89bc104186a32e12b026601
+  - enabled: 1
+    path: Assets/Object Pooling/Demo/Object Pooling_Demo.unity
+    guid: 162522c4cc1e57b4fb257b8fbf841318
+  - enabled: 1
+    path: Assets/Pathfinding/Pathfinding_Demo.unity
+    guid: 2a5d68bad76123440863c9ce388bea46
+  - enabled: 1
+    path: Assets/User Interface Expansion/Demo/User Interface Expansion_Demo.unity
+    guid: 3773a7149e7011b4aa3c4cdc485f6d43
   m_configObjects: {}

@@ -911,7 +911,7 @@ MonoBehaviour:
     from an point then replicate itself to \trandom direction on an grid until meet
     the requirement.\r\n\n<b>Bodd:</b>\n- Create grid that alway has an odd size
     and an center.\n\n<b>Boxes</b>\n- Create simple grid."
-  featureScene: {fileID: 0}
+  featureScene: {fileID: 102900000, guid: f7bea791b89bc104186a32e12b026601, type: 3}
   indicator: {fileID: 1781622468}
 --- !u!1 &369103680
 GameObject:
@@ -1417,7 +1417,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: "\rShowcasing some visual effect i has created.\r\n\r\n<b>Electric
     Line:</b>\r\n- Get random point between 2 line then move them randomly verticaly."
-  featureScene: {fileID: 0}
+  featureScene: {fileID: 102900000, guid: cb647e4e52d5123489a2d24d36133aa1, type: 3}
   indicator: {fileID: 989135438}
 --- !u!114 &601707384
 MonoBehaviour:
@@ -1916,7 +1916,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   description: An simple object pooling.
-  featureScene: {fileID: 0}
+  featureScene: {fileID: 102900000, guid: 162522c4cc1e57b4fb257b8fbf841318, type: 3}
   indicator: {fileID: 1831452343}
 --- !u!114 &647188441
 MonoBehaviour:
@@ -2262,7 +2262,7 @@ MonoBehaviour:
 
     - Top-down
     path finding system.'
-  featureScene: {fileID: 0}
+  featureScene: {fileID: 102900000, guid: 2a5d68bad76123440863c9ce388bea46, type: 3}
   indicator: {fileID: 248019411}
 --- !u!114 &764619838
 MonoBehaviour:
@@ -2584,7 +2584,7 @@ MonoBehaviour:
     game Print:</b>
 
     - Log text to an in game text display'
-  featureScene: {fileID: 0}
+  featureScene: {fileID: 102900000, guid: 3773a7149e7011b4aa3c4cdc485f6d43, type: 3}
   indicator: {fileID: 1061078660}
 --- !u!114 &992605010
 MonoBehaviour:
@@ -2893,7 +2893,7 @@ MonoBehaviour:
     8 direction top down movement control.
 
 '
-  featureScene: {fileID: 0}
+  featureScene: {fileID: 102900000, guid: 82fe5561a66d9f545ae7e8ad9f879e07, type: 3}
   indicator: {fileID: 1614249597}
 --- !u!114 &1069450443
 MonoBehaviour:
