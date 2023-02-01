@@ -1,0 +1,40 @@
+AStar:
+	Improvement:
+		▪ Option to force tracer move regardless of path is unwalkable
+		✓ Option to make object look toward path it moving
+		▪ Make astar more easy to set up:
+			▪ Combine requestor, astar, pathmap to be in one script?
+			▪ Make when assign atsar everything needed with be add?
+		✓ Tracer rotation speed
+			> Next waypoint
+			> Start an while coroutine
+			> Coroutine while lerp from transfrom.up to dir
+			> Re-run when next waypoint
+		▪ Use rigidbody for movement instead of move toward
+		▪ Cleaning waypoint 
+			! Make this optional with how much need to clean
+			> Create an empty list of waypoints [cleaned]
+			> Go through all [waypoints]
+			> Begin at the second waypoint [a]
+			> [a] will check it next waypoint [b]
+				? If [b] are still in [waypoints]
+					> Compare world distance from [a] -> [b]
+					? If [b] in range [a] > Do nothing
+					? If [b] NOT in range [a] > Then add [a] to [cleaned]
+					> Repeat 2> but now are using [b]
+				? If [b] are out of [waypoints]
+					> Cleaned complete
+			> Overwrite [waypoints] with [cleaned]
+		X Flatting out zig-zag waypoint 
+			> Start at the first waypoint as [origin]
+			> Get the next next waypoint of [origin] as [skip]
+			? If [skip] are 2 node away from [origin] in coordinates
+			? If [skip] align diagonally with [origin]
+				> [origin] are now [skip]
+				> Repeat from 2
+			| If both condition are not meet
+				> Add [origin] to an new waypoint list [flatten]
+			> Go until out of waypoints
+			> overwrite waypoints with [flatten]
+		Bugs:
+			▪ Map not work if position are not 0,0,0
