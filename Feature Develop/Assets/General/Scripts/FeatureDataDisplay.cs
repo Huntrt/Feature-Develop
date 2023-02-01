@@ -6,22 +6,22 @@ public class FeatureDataDisplay : MonoBehaviour
 {
 	[SerializeField] GameObject displayPanel;
 	[SerializeField] TextMeshProUGUI featureNameDisplay, featureDescriptionDisplay;
-	FeatureData current; bool hasDisplay;
+	FeatureData curDisplay; bool hasDisplay;
 	//Turn this class into singleton
     public static FeatureDataDisplay i; void Awake() {i = this;}
 
 	public void DisplayData(FeatureData data)
 	{
 		//Deactive the old indicator if has display
-		if(hasDisplay) {current.indicator.SetActive(false);}
+		if(hasDisplay) {curDisplay.indicator.SetActive(false);}
 		//Has display then save the given data as current data
-		hasDisplay = true; current = data;
+		hasDisplay = true; curDisplay = data;
 		//Display the name of current data as data's gameobject name
-		featureNameDisplay.text = current.gameObject.name;
+		featureNameDisplay.text = curDisplay.gameObject.name;
 		//Display the description of current data
-		featureDescriptionDisplay.text = current.description;
+		featureDescriptionDisplay.text = curDisplay.description;
 		//Active the current indicator
-		current.indicator.SetActive(true);
+		curDisplay.indicator.SetActive(true);
 		//Active the display panel
 		displayPanel.SetActive(true);
 	}
@@ -29,11 +29,11 @@ public class FeatureDataDisplay : MonoBehaviour
 	public void CloseDisplay()
 	{
 		//Dective the current indicator
-		current.indicator.SetActive(false);
+		curDisplay.indicator.SetActive(false);
 		//Dective the display panel
 		displayPanel.SetActive(false);
 	}
 
 	//Load the current scene ID
-	public void LoadFeatureScene() {SceneManager.LoadScene(current.sceneObj.name, LoadSceneMode.Single);}
+	public void LoadFeatureScene() {SceneManager.LoadScene(curDisplay.featureScene.name, LoadSceneMode.Single);}
 }

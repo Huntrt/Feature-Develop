@@ -1,10 +1,10 @@
 using UnityEngine;
-using System;
+using UnityEditor;
 
 public class FeatureData : MonoBehaviour
 {
 	[TextArea(10,100)] public string description;
-	public UnityEngine.Object sceneObj;
+	public SceneAsset featureScene;
 	public GameObject indicator;
 
 	//Send data of this feature to display when click it button
