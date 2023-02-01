@@ -13,25 +13,30 @@ public class Pooler : MonoBehaviour
 	static Pooler _i;
 	#endregion
 	
-	[Serializable] public class Pool {public List<GameObject> pool = new List<GameObject>();} 
-	public List<Pool> pools = new List<Pool>(); 
-	public List<string> names;
+	[Serializable] public class Pool 
+	{
+		public string key; 
+		public List<GameObject> pool;
+
+		public Pool(string key)
+		{
+			this.key = key;
+			this.pool = new List<GameObject>();
+		}
+	} 
+	[SerializeField] List<Pool> poolGroup = new List<Pool>(); 
 
 	//Create the object needed with wanted position, rotation, does it auto active upon create? and do it need to has parent?
 	public GameObject Create(GameObject need, Vector3 position, Quaternion rotation, bool autoActive = true, Transform parent = null)
 	{
-		//Get the name of needed object
-		string name = need.name + "(Clone)";
-		//If haven't save the name
-		if(!names.Contains(name))
-		{
-			//Save it
-			names.Add(name);
-			//Make an pool for that name
-			pools.Add(new Pool());
-		}
-		//Use the pool at index of the needed name
-		List<GameObject> use = pools[names.IndexOf(name)].pool;
+		//Convert the name of needed object to key
+		string neededKey = need.name + "(Clone)";
+		
+		//Create an new pool for the needed key if it haven't exist
+		if(GetPool(neededKey) == null) poolGroup.Add(new Pool(neededKey));
+
+		//Get the pool to be use of needed key
+		List<GameObject> use = GetPool(neededKey);
 
 		//If the use pool has object then go through all of it object
 		if(use.Count > 0) {for (int o = 0; o < use.Count; o++)
@@ -43,9 +48,9 @@ public class Pooler : MonoBehaviour
 			//If this object is unactive 
 			if(!obj.activeInHierarchy)
 			{
-				//Move this object to last
+				//Move this object to last since it will be use
 				use.Add(obj); use.RemoveAt(o);
-				//Using the last object since it got move
+				//Using the last object just move
 				obj = use[use.Count-1];
 				//Set it position
 				obj.transform.position = position;
@@ -73,6 +78,16 @@ public class Pooler : MonoBehaviour
 		return newObj;
 	}
 
-	//Return the game object list of pool of given name
-	public List<GameObject> GetPool(string name) {return pools[names.IndexOf(name)].pool;}
+	//Return the object pool of given key
+	public List<GameObject> GetPool(string poolKey) 
+	{
+		//Go through all the pool
+		for (int p = 0; p < poolGroup.Count; p++)
+		{
+			//Return the pool that it key match the given key
+			if(poolGroup[p].key == poolKey) return poolGroup[p].pool;
+		}
+		//Return nothing if no key match
+		return null;
+	}
 }
