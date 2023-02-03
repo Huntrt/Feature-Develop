@@ -1,14 +1,14 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ElectricLine : MonoBehaviour
 {
+	public string test;
     public LineRenderer lineRenderer;
-	[Tooltip("The effect will refresh every second")]
+	[Tooltip("The effect will refresh with every second")]
 	public float interval; float intervalCounter;
-	[Tooltip("How far can the point move away from it initialize position")]
+	[Tooltip("The minimum and maximum range for how big electric will be")]
 	public Amplitude amplitude;
-	[Tooltip("How many percent can each point get of total line")]
+	[Tooltip("percent: Next point will space an percentage of total line\n\nShrink Distance: Next point will use total distance if it distance are too big\n\nRaw Distance: Next point will just use distance")]
 	public Spacing spacing = new Spacing();
 	[HideInInspector] public Vector2 target;
 	int overwriteMode; // 0 = none | 1 = start -> target | 2 = start <- target
@@ -18,12 +18,17 @@ public class ElectricLine : MonoBehaviour
 	[System.Serializable] 
 	public class Spacing 
 	{
-		public enum Mode {percent, distance, adaptDistance,}
-		[Tooltip("percent: each point will spacing an percentage of total line\n\ndistance: point will distance each other no matter line length\n\nadaptDistance: point space like distance but able adapt in smaller line")]
+		public enum Mode {percent, shrinkDistance, rawDistance}
 		public Mode mode;
-		[Range(0,100)] public float min; [Range(0.1f,100)]public float max = 0.1f;
+		public float min; public float max;
 	}
-	[System.Serializable] public class Amplitude {public bool inOrder; public float min; public float max;}
+	[System.Serializable] 
+	public class Amplitude 
+	{
+		[Tooltip("Will the point be amplify up down in order")]
+		public bool inOrder; 
+		public float min; public float max;
+	}
 
 	//Draw upon enable
 	void OnEnable() {Draw();}
@@ -64,62 +69,63 @@ public class ElectricLine : MonoBehaviour
 	{
 		//Set start position as this object position
 		Vector2 start = transform.position;
-		//Print an error and stop code if start has the same vector as target
-		if(start == target) {Debug.LogWarning("'start' and 'target' can't be the same vector in ElectricLine.cs"); return;}
-		//Get the distance from start to target
-		float total = Vector2.Distance(start, target);
+		//Print an warning if start has the same position as target
+		if(start == target) {Debug.LogWarning("'start' and 'target' shouldn't be at the same position for electric");}
+		//Get the total distance from start to target
+		float totalDist = Vector2.Distance(start, target);
 		//Get euler angle from of start to taget
 		float angle = Mathf.Atan2(target.y - start.y, target.x - start.x) * (180/Mathf.PI);
 		//Get direction from start to target 
 		Vector2 direction = (target - start).normalized;
-		//The amount of distance has occupied, it counter and latest spaced position
-		float occupied = 0; int counter = 0; Vector2 spaced = start;
+		//The amount of distance has occupied
+		float occupiedDist = 0;
+		//Which point index currently use
+		int curPoint = 0;
+		//First point is space from start position
+		Vector2 spaced = start;
 		//While haven't occupied the total distance
-		while (occupied <= total)
+		while (occupiedDist <= totalDist)
 		{
-			//Create new line position and increase counter
-			line.positionCount++; counter++;
-			//Getting current distance to use
-			float distance = Distancing(total);
-			//Get the next spacing position by multiple direction with distance  
+			//Added an new line position that is current point
+			line.positionCount++; curPoint++;
+			//Getting distance to space
+			float distance = SpacingPoints(totalDist);
+			//Spacing away toward direction with distance just get
 			spaced += direction * distance;
-			//Has occupied the amount of distance has get
-			occupied += distance;
-			//Set point position as amplify direction calculated that got multiply with randomize amplitude 
-			Vector2 point = spaced + (Amplifying(angle) * Random.Range(amplitude.min, amplitude.max));
-			//Set counted line position at point
-			line.SetPosition(counter, point);
+			//Has occupied the distance
+			occupiedDist += distance;
+			//Get point position by amplify toward angle with randomize amplitude amount
+			Vector2 pointPos = spaced + (AmplifyAngle(angle) * Random.Range(amplitude.min, amplitude.max));
+			//Set current line point with it pos
+			line.SetPosition(curPoint, pointPos);
 		}
 	}
 
-	float Distancing(float total)
+	float SpacingPoints(float total)
 	{
-		//If spacing percent
+		//Randomize the distance to be space
+		float distance = Random.Range(spacing.min, spacing.max);
+		//If spacing by percent
 		if(spacing.mode == Spacing.Mode.percent)
 		{
-			//Return the value of randomize percented of total length
-			return (Random.Range(spacing.min, spacing.max) / 100) * total;
+			//Return distance as percented of total length
+			return (distance / 100) * total;
 		}
-		//If spacing distance
-		else if(spacing.mode == Spacing.Mode.distance)
+		//If spacing by shrinking distance
+		else if(spacing.mode == Spacing.Mode.shrinkDistance)
 		{
-			//Return the randomize distance from min and max
-			return Random.Range(spacing.min, spacing.max);
+			//Get atleast an point of total to be distance if the distance has get are bigger than total
+			if(distance >= total) distance = Random.Range(0, total);
+			//Return distance has shrink
+			return distance;
 		}
-		//If spacing adapt with distance
-		else if(spacing.mode == Spacing.Mode.adaptDistance)
-		{
-			//Get the randomize distance from min and max
-			float dist = Random.Range(spacing.min, spacing.max);
-			//If getted ditance are smaller than total then aleast create 1 point
-			if(dist >= total) {dist = Random.Range(0, total);}
-			//Return distance has adapted
-			return dist;
-		}
+		//Return raw distance if spacing by raw distance
+		else if(spacing.mode == Spacing.Mode.rawDistance) return distance;
+		
 		return -1;
 	}
 
-	int side; Vector2 Amplifying(float angle)
+	int side; Vector2 AmplifyAngle(float angle)
 	{
 		//The rotation that will apply to angle
 		float rot = 0;
@@ -139,7 +145,7 @@ public class ElectricLine : MonoBehaviour
 		return new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
 	}
 
-	//@ Function that allow for other to overwrite point
+	//@ Additional function that allow for other to overwrite point
 	public void OverwriteFromStart(Vector2[] points) {overwritePoints = points; overwriteMode = 1;}
 	public void OverwriteFromTarget(Vector2[] points) {overwritePoints = points; overwriteMode = 2;}
 
