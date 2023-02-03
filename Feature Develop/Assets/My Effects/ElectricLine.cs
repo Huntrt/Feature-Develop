@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class ElectricLine : MonoBehaviour
 {
-	public string test;
     public LineRenderer lineRenderer;
 	[Tooltip("The effect will refresh with every second")]
 	public float interval; float intervalCounter;
@@ -11,7 +10,7 @@ public class ElectricLine : MonoBehaviour
 	[Tooltip("percent: Next point will space an percentage of total line\n\nShrink Distance: Next point will use total distance if it distance are too big\n\nRaw Distance: Next point will just use distance")]
 	public Spacing spacing = new Spacing();
 	[HideInInspector] public Vector2 target;
-	int overwriteMode; // 0 = none | 1 = start -> target | 2 = start <- target
+	enum OverwriteMode {none, start, target} OverwriteMode overwriteMode;
 	Vector2[] overwritePoints;
 	public event System.Action onDraw;
 
@@ -59,8 +58,6 @@ public class ElectricLine : MonoBehaviour
 		SetupPoints(line);
 		//Add the line final position to be target position
 		line.SetPosition(line.positionCount-1, target);
-		//Begin overwrite point
-		Overwriting();
 		//Call on draw event after finish draw electric
 		onDraw?.Invoke();
 	}
@@ -143,46 +140,5 @@ public class ElectricLine : MonoBehaviour
 		float radians = (angle + rot) * Mathf.Deg2Rad;
 		//Return the direction to amplify by apply cos, sin to radians
 		return new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
-	}
-
-	//@ Additional function that allow for other to overwrite point
-	public void OverwriteFromStart(Vector2[] points) {overwritePoints = points; overwriteMode = 1;}
-	public void OverwriteFromTarget(Vector2[] points) {overwritePoints = points; overwriteMode = 2;}
-
-	void Overwriting()
-	{
-		//Don't overwrite anything if mode are 0 or there no point to overwrite
-		if(overwriteMode == 0 || overwritePoints.Length == 0) {return;}
-		//Get the first index at 1, the last index before target and the amount of point available
-		int first = 1; int last = lineRenderer.positionCount-1; int count = lineRenderer.positionCount-3;
-		//The overwrite mode current use
-		switch(overwriteMode)
-		{
-			//If 1 then overwrite from start -> target
-			case 1:
-				//Starting from the first index
-				for (int p = first; p < last; p++)
-				{
-					//Stop if has overwritten all the point
-					if(p > overwritePoints.Length) {break;}
-					//Set current line position to current overwrite point
-					lineRenderer.SetPosition(p, overwritePoints[p-1]);
-				}
-			break;
-			//If 2 then overwrite from target -> start
-			case 2:
-				//Count the time has overwrite
-				int co = 0;
-				for (int p = last-1; p >= first ; p--)
-				{
-					//Stop if has overwritten all the point
-					if(co+1 > overwritePoints.Length) {break;}
-					//Set current line position to current overwrite point
-					lineRenderer.SetPosition(p, overwritePoints[co]);
-					//Has overwrite once more
-					co++;
-				}
-			break;
-		}
 	}
 }

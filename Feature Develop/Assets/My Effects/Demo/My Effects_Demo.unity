@@ -521,9 +521,9 @@ MonoBehaviour:
     min: 0.1
     max: 0.5
   spacing:
-    mode: 2
+    mode: 1
     min: 0.5
-    max: 1
+    max: 0.1
   target: {x: 0, y: 0}
 --- !u!114 &1681380664
 MonoBehaviour:
@@ -539,7 +539,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   electricLine: {fileID: 1681380663}
   speed: 10
-  overwrite: []
 --- !u!212 &1681380665
 SpriteRenderer:
   m_ObjectHideFlags: 0

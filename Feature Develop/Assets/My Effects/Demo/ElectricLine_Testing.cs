@@ -4,7 +4,6 @@ public class ElectricLine_Testing : MonoBehaviour
 {
     [SerializeField] ElectricLine electricLine;
 	[SerializeField] float speed;
-	[SerializeField] Vector2[] overwrite;
 	Vector3 inputDirection;
 	Camera cam;
 
@@ -14,13 +13,11 @@ public class ElectricLine_Testing : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
 		{
-			electricLine.OverwriteFromTarget(overwrite);
 			electricLine.target = cam.ScreenToWorldPoint(Input.mousePosition);
 			electricLine.enabled = true;
 		}
         if(Input.GetMouseButton(0))
 		{
-			electricLine.OverwriteFromTarget(overwrite);
 			electricLine.target = cam.ScreenToWorldPoint(Input.mousePosition);
 		}
         if(Input.GetMouseButtonUp(0))
