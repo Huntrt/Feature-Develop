@@ -10,8 +10,6 @@ public class ElectricLine : MonoBehaviour
 	[Tooltip("percent: Next point will space an percentage of total line\n\nShrink Distance: Next point will use total distance if it distance are too big\n\nRaw Distance: Next point will just use distance")]
 	public Spacing spacing = new Spacing();
 	[HideInInspector] public Vector2 target;
-	enum OverwriteMode {none, start, target} OverwriteMode overwriteMode;
-	Vector2[] overwritePoints;
 	public event System.Action onDraw;
 
 	[System.Serializable] 
@@ -29,24 +27,23 @@ public class ElectricLine : MonoBehaviour
 		public float min; public float max;
 	}
 
-	//Draw upon enable
-	void OnEnable() {Draw();}
-
-	void Update()
+	public void Draw()
 	{
 		//Counting interval counter
 		intervalCounter += Time.deltaTime;
 		//If interval counter has reach needed amount
 		if(intervalCounter >= interval) 
 		{
-			//Draw the electric effect
-			Draw();
+			//Create the line
+			CreateLine();
+			//Call on draw event after finish draw electric
+			onDraw?.Invoke();
 			//Reset the interval counter
 			intervalCounter -= intervalCounter;
 		}
 	}
 
-	public void Draw()
+	void CreateLine()
 	{
 		//Save the line renderer then set reset is position count
 		LineRenderer line = lineRenderer; line.positionCount = 1;
@@ -58,8 +55,6 @@ public class ElectricLine : MonoBehaviour
 		SetupPoints(line);
 		//Add the line final position to be target position
 		line.SetPosition(line.positionCount-1, target);
-		//Call on draw event after finish draw electric
-		onDraw?.Invoke();
 	}
 
 	void SetupPoints(LineRenderer line)

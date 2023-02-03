@@ -11,18 +11,10 @@ public class ElectricLine_Testing : MonoBehaviour
 	
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
-		{
-			electricLine.target = cam.ScreenToWorldPoint(Input.mousePosition);
-			electricLine.enabled = true;
-		}
         if(Input.GetMouseButton(0))
 		{
 			electricLine.target = cam.ScreenToWorldPoint(Input.mousePosition);
-		}
-        if(Input.GetMouseButtonUp(0))
-		{
-			electricLine.enabled = false;
+			electricLine.Draw();
 		}
 		MoveInput();
     }
