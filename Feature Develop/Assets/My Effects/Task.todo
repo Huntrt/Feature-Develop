@@ -1,0 +1,8 @@
+Eelectric Line:
+	✓ Draw line with amplitude
+	✓ Spacing between wach point
+	▪ Chain point:
+		Goal - Keep the effect going but some point will set to it nearest target
+		▪ An array of "point" chain
+		▪ Allow multiple target
+		▪ Create more line after pass through target
