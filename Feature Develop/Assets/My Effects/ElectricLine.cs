@@ -9,7 +9,6 @@ public class ElectricLine : MonoBehaviour
 	public Amplitude amplitude;
 	[Tooltip("percent: Next point will space an percentage of total line\n\nShrink Distance: Next point will use total distance if it distance are too big\n\nRaw Distance: Next point will just use distance")]
 	public Spacing spacing = new Spacing();
-	[HideInInspector] public Vector2 target;
 	public event System.Action onDraw;
 
 	[System.Serializable] 
@@ -27,15 +26,16 @@ public class ElectricLine : MonoBehaviour
 		public float min; public float max;
 	}
 
-	public void Draw()
+	#region Draw For Single Target
+	public void Draw(Vector2 start, Vector2 target)
 	{
 		//Counting interval counter
 		intervalCounter += Time.deltaTime;
 		//If interval counter has reach needed amount
 		if(intervalCounter >= interval) 
 		{
-			//Create the line
-			CreateLine();
+			//Create the line with given target
+			RefreshLine(start, target);
 			//Call on draw event after finish draw electric
 			onDraw?.Invoke();
 			//Reset the interval counter
@@ -43,36 +43,76 @@ public class ElectricLine : MonoBehaviour
 		}
 	}
 
-	void CreateLine()
+	void RefreshLine(Vector2 start, Vector2 target)
 	{
-		//Save the line renderer then set reset is position count
+		//Save the line renderer then reset it position count
 		LineRenderer line = lineRenderer; line.positionCount = 1;
 		//Print an wanring if line renderer using world space
-		if(!line.useWorldSpace) {Debug.LogWarning("It recommend to disable line renderer 'useWorldSpace' ElectricLine.cs");}
-		//Set the line first position at this object position
-		line.SetPosition(0, transform.position);
-		//Begin setting up in between point
-		SetupPoints(line);
-		//Add the line final position to be target position
-		line.SetPosition(line.positionCount-1, target);
+		if(!line.useWorldSpace) Debug.LogWarning("It is recommend to disable line renderer 'useWorldSpace' when using electric line");
+		//Making an line from given start to target
+		LineMaking(start, target);
+	}
+	#endregion
+
+	#region Draw For Multiple Target
+	public void Draw(Vector2 start, Vector2[] targets) 
+	{
+		//Counting interval counter
+		intervalCounter += Time.deltaTime;
+		//If interval counter has reach needed amount
+		if(intervalCounter >= interval) 
+		{
+			//Create the line with given targets
+			RefreshLine(start, targets);
+			//Call on draw event after finish draw electric
+			onDraw?.Invoke();
+			//Reset the interval counter
+			intervalCounter -= intervalCounter;
+		}
 	}
 
-	void SetupPoints(LineRenderer line)
+	void RefreshLine(Vector2 start, Vector2[] targets)
 	{
-		//Set start position as this object position
-		Vector2 start = transform.position;
-		//Print an warning if start has the same position as target
-		if(start == target) {Debug.LogWarning("'start' and 'target' shouldn't be at the same position for electric");}
-		//Get the total distance from start to target
-		float totalDist = Vector2.Distance(start, target);
-		//Get euler angle from of start to taget
-		float angle = Mathf.Atan2(target.y - start.y, target.x - start.x) * (180/Mathf.PI);
-		//Get direction from start to target 
-		Vector2 direction = (target - start).normalized;
+		//Save the line renderer then reset it position count
+		LineRenderer line = lineRenderer; line.positionCount = 1;
+		//Print an wanring if line renderer using world space
+		if(!line.useWorldSpace) Debug.LogWarning("It is recommend to disable line renderer 'useWorldSpace' when using electric line");
+		//Go through all the targets
+		for (int t = 0; t < targets.Length; t++)
+		{
+			//Get previous target but if there no previous target then get given start
+			Vector2 preTarget = (t == 0) ? start : targets[t-1];
+			//Making an line from previous target to current target
+			LineMaking(preTarget, targets[t]);
+		}
+	}
+	#endregion
+
+	void LineMaking(Vector2 start, Vector2 end)
+	{
+		LineRenderer line = lineRenderer;
+		//Set the line first position at given start
+		line.SetPosition(line.positionCount-1, start);
+		//Begin setting up point between start to end
+		SetupPoints(line, start, end);
+		//Set the line final position to be given end
+		line.SetPosition(line.positionCount-1, end);
+	}
+
+	void SetupPoints(LineRenderer line, Vector2 start, Vector2 end)
+	{
+		//Print an warning if start has the same position as end
+		if(start == end) {Debug.LogWarning("'start' and 'end' shouldn't be at the same position for electric");}
+		//Get the total distance from start to end
+		float totalDist = Vector2.Distance(start, end);
+		//Get euler angle from of start to end
+		float angle = Mathf.Atan2(end.y - start.y, end.x - start.x) * (180/Mathf.PI);
+		//Get direction from start to end 
+		Vector2 direction = (end - start).normalized;
 		//The amount of distance has occupied
 		float occupiedDist = 0;
 		//Which point index currently use
-		int curPoint = 0;
+		int curPoint = line.positionCount-1;
 		//First point is space from start position
 		Vector2 spaced = start;
 		//While haven't occupied the total distance
