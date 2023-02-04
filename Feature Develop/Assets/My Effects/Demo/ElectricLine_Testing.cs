@@ -3,29 +3,29 @@ using UnityEngine;
 public class ElectricLine_Testing : MonoBehaviour
 {
     [SerializeField] ElectricLine electricLine;
-	[SerializeField] float speed;
-	[SerializeField] Vector2[] overwrite;
+	[SerializeField] float moveSpeed;
+	[SerializeField] Transform[] chainObjs;
+	Vector2[] chainTargets;
 	Vector3 inputDirection;
 	Camera cam;
 
-	void Start() {cam = Camera.main;}
+	void Start() 
+	{
+		cam = Camera.main;
+	}
 	
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
-		{
-			electricLine.OverwriteFromTarget(overwrite);
-			electricLine.target = cam.ScreenToWorldPoint(Input.mousePosition);
-			electricLine.enabled = true;
-		}
         if(Input.GetMouseButton(0))
 		{
-			electricLine.OverwriteFromTarget(overwrite);
-			electricLine.target = cam.ScreenToWorldPoint(Input.mousePosition);
-		}
-        if(Input.GetMouseButtonUp(0))
-		{
-			electricLine.enabled = false;
+			//Chain target amount is object chain with extra 1
+			chainTargets = new Vector2[chainObjs.Length+1];
+			//The first chain target are mouse position
+			chainTargets[0] = cam.ScreenToWorldPoint(Input.mousePosition);
+			//Go through all the electric line target to set each of it to be chain object position
+			for (int t = 1; t < chainTargets.Length; t++) chainTargets[t] = (Vector2)chainObjs[t-1].position;
+			//Draw line along chain target
+			electricLine.Draw(transform.position, chainTargets);
 		}
 		MoveInput();
     }
@@ -37,7 +37,7 @@ public class ElectricLine_Testing : MonoBehaviour
         //Make diagonal movement no longer faster than vertical, horizontal
         velocity = inputDirection.normalized;
         //Add the speed to velocity
-        velocity *= speed;
+        velocity *= moveSpeed;
 	}
 
 	void FixedUpdate()
