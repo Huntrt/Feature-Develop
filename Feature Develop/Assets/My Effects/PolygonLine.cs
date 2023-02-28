@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public static class VertexCircle
+public static class PolygonLine
 {
     public static void Draw(LineRenderer line, int vertexCount, float size)
 	{
