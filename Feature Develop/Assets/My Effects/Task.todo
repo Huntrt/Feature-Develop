@@ -1,4 +1,4 @@
-Eelectric Line:
+Electric Line:
 	✓ Draw line with amplitude
 	✓ Spacing between wach point
 	✓ Chain point:
@@ -6,3 +6,7 @@ Eelectric Line:
 		✓ An array of "point" chain
 		✓ Allow multiple target
 		✓ Create more line after pass through target
+Vertex Circle:
+	▪ Draw line in an circle shape.
+	▪ Size of the circle.
+	▪ Vertices of circle.
