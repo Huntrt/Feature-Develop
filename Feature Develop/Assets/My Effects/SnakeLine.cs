@@ -73,10 +73,18 @@ public class SnakeLine : MonoBehaviour
 		//Set collider point
 		SetColliderPoint();
 	}
+	
+	void SetColliderPoint()
+	{
+		//Set collision collider point if needed
+		if(collisionCollider != null) collisionCollider.SetPoints(segments);
+		//Set trigger collider point if needed (and enable it trigger)
+		if(triggerCollider != null) {triggerCollider.SetPoints(segments); triggerCollider.isTrigger = true;}
+	}
 
 	public void Grow()
 	{
-		//Grow another part 
+		//Grow another segment at the last position 
 		segments.Add(segmentPos[segmentPos.Count-1]);
 		segmentPos.Add(segmentPos[segmentPos.Count-1]);
 		//Set line position for each segment
@@ -85,11 +93,16 @@ public class SnakeLine : MonoBehaviour
 		DrawSegment();
 	}
 
-	void SetColliderPoint()
+	public void Shrink()
 	{
-		//Set collision collider point if needed
-		if(collisionCollider != null) collisionCollider.SetPoints(segments);
-		//Set trigger collider point if needed (and enable it trigger)
-		if(triggerCollider != null) {triggerCollider.SetPoints(segments); triggerCollider.isTrigger = true;}
+		//Send an warning when there no segment left to shrink
+		if(segments.Count <= 0) {Debug.LogWarning("Cant shrink snake any further"); return;}
+		//Shrink the last segment 
+		segments.RemoveAt(segments.Count-1);
+		segmentPos.RemoveAt(segmentPos.Count-1);
+		//Set line position for each segment
+		line.positionCount = segments.Count;
+		//Draw segment instantly after shrink
+		DrawSegment();
 	}
 }

@@ -20,9 +20,13 @@ public class Snake_Testing : MonoBehaviour
 		//Look toward mouse only when not right under it
 		if(mousePos != (Vector2)transform.position) transform.up = mousePos - (Vector2)transform.position;
 	
-		if(Input.GetKeyDown(KeyCode.U))
+		if(Input.GetKey(KeyCode.U))
 		{
-			if(snakeLine != null) snakeLine.Grow();
+			snakeLine.Grow();
+		}
+		if(Input.GetKey(KeyCode.I))
+		{
+			snakeLine.Shrink();
 		}
 	}
 }
