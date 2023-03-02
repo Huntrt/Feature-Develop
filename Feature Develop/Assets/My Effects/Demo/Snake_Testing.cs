@@ -16,10 +16,10 @@ public class Snake_Testing : MonoBehaviour
 	{
 		//Get mouse position
 		Vector2 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-		//Move toward the mouse with speed
-		transform.position = Vector3.MoveTowards(transform.position, mousePos, speed * Time.deltaTime);
 		//Look toward mouse only when not right under it
 		if(mousePos != (Vector2)transform.position) transform.up = mousePos - (Vector2)transform.position;
+		//Move toward the mouse with speed
+		transform.position = Vector3.MoveTowards(transform.position, mousePos, speed * Time.deltaTime);
 	
 		//@ Grow and shrink snake if any of it method are active
 		if(Input.GetKey(KeyCode.U))
