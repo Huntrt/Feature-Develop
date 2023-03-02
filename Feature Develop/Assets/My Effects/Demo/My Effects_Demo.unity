@@ -735,7 +735,7 @@ MonoBehaviour:
   head: {fileID: 1233308890}
   body: {fileID: 8969012353723689514, guid: 3ec74b26098458943a1ea4388a92f13f, type: 3}
   initialSegment: 10
-  spacing: 0.35
+  spacing: 0.5
   segments: []
 --- !u!1 &1313230414
 GameObject:
@@ -820,6 +820,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   snakeLine: {fileID: 1808849256}
+  snakeBody: {fileID: 1233308891}
 --- !u!4 &1313230417
 Transform:
   m_ObjectHideFlags: 0

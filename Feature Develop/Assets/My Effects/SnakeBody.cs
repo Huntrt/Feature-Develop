@@ -31,11 +31,11 @@ public class SnakeBody : MonoBehaviour
 
 	void LateUpdate()
 	{
-		//Only draw if segment pos for head exist
-		if(segmentPos.Count > 0) DrawSegment();
+		//Only move if segment pos for head exist
+		if(segmentPos.Count > 0) MoveSegment();
 	}
 
-	public void DrawSegment()
+	public void MoveSegment()
 	{
 		//Get distance between the head and the first segment
 		float dist = Vector2.Distance((Vector2)head.position, segmentPos[0]);
@@ -65,20 +65,18 @@ public class SnakeBody : MonoBehaviour
 	{
 		//Grow another body segment
 		CreateBodySegment();
-		segmentPos.Add(segmentPos[segmentPos.Count-1]);
-		//Draw segment instantly after grow
-		DrawSegment();
+		//Move segment instantly after grow
+		MoveSegment();
 	}
 
 	public void Shrink()
 	{
-		//Send an warning when there no segment left to shrink
-		if(segments.Count <= 0) {Debug.LogWarning("Cant shrink snake any further"); return;}
+		//Send an warning when there only head segment left to shrink
+		if(segments.Count <= 1) {Debug.LogWarning("Cant shrink snake any further"); return;}
 		//Destroy the last body segment
 		DestroyBodySegment();
-		segmentPos.RemoveAt(segmentPos.Count-1);
-		//Draw segment instantly after shrink
-		DrawSegment();
+		//Move segment instantly after shrink
+		MoveSegment();
 	}
 
 	void CreateBodySegment()
@@ -87,6 +85,8 @@ public class SnakeBody : MonoBehaviour
 		GameObject newBody = Instantiate(body, segmentPos[segmentPos.Count-1], body.transform.localRotation);
 		//Add the new body to segment
 		segments.Add(newBody.transform);
+		//Add an position for newly created segment
+		segmentPos.Add(segmentPos[segmentPos.Count-1]);
 	}
 
 	void DestroyBodySegment()
@@ -95,5 +95,7 @@ public class SnakeBody : MonoBehaviour
 		Destroy(segments[segments.Count-1].gameObject);
 		//Shrink the last segment 
 		segments.RemoveAt(segments.Count-1);
+		//Remove position of the last segment
+		segmentPos.RemoveAt(segmentPos.Count-1);
 	}
 }
