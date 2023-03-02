@@ -89,7 +89,7 @@ public class SnakeLine : MonoBehaviour
 	{
 		//Set collision collider point if needed
 		if(collisionCollider != null) collisionCollider.SetPoints(segments);
-		//Set trigger collider point if needed
-		if(triggerCollider != null) triggerCollider.SetPoints(segments);
+		//Set trigger collider point if needed (and enable it trigger)
+		if(triggerCollider != null) {triggerCollider.SetPoints(segments); triggerCollider.isTrigger = true;}
 	}
 }
