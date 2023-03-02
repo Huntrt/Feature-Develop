@@ -7,6 +7,8 @@ public class SnakeBody : MonoBehaviour
 	public GameObject body;
 	public int initialSegment;
 	[SerializeField] float spacing;
+	enum LookAxis {none, up, down, left ,right}
+	[SerializeField][Tooltip("The segment behind will look toward the segment infront of it")] LookAxis lookToward;
 	public List<Transform> segments = new List<Transform>();
 	List<Vector2> segmentPos = new List<Vector2>();
 
@@ -60,6 +62,16 @@ public class SnakeBody : MonoBehaviour
 		{
 			//Lerping this segment to it previous segment using progress of distance
 			segments[b].position = Vector2.Lerp(segmentPos[b], segmentPos[b-1], dist/spacing);
+			//Get the direction of this segment look toward segment infront of it
+			Vector2 lookDirection = segmentPos[b+1] - segmentPos[b];
+			//@ Make this segment look toward using choosed it axis
+			switch((int)lookToward)
+			{
+				case 1: segments[b].up = lookDirection; break;
+				case 2: segments[b].up = -lookDirection; break;
+				case 3: segments[b].right = -lookDirection; break;
+				case 4: segments[b].right = lookDirection; break;
+			}
 		}
 	}
 

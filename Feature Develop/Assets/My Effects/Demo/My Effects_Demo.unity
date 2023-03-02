@@ -736,6 +736,7 @@ MonoBehaviour:
   body: {fileID: 8969012353723689514, guid: 3ec74b26098458943a1ea4388a92f13f, type: 3}
   initialSegment: 10
   spacing: 0.5
+  lookToward: 1
   segments: []
 --- !u!1 &1313230414
 GameObject:
@@ -818,7 +819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1a68abb6d85b8a4382cf98fa15d0a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 5
   snakeLine: {fileID: 1808849256}
   snakeBody: {fileID: 1233308891}
 --- !u!4 &1313230417
