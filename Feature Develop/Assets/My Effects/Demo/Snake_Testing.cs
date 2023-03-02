@@ -4,6 +4,7 @@ public class Snake_Testing : MonoBehaviour
 {
     Camera cam;
 	[SerializeField] float speed;
+	[SerializeField] SnakeLine snakeLine;
 
 	void Start()
 	{
@@ -18,5 +19,10 @@ public class Snake_Testing : MonoBehaviour
 		transform.position = Vector3.MoveTowards(transform.position, mousePos, speed * Time.deltaTime);
 		//Look toward mouse only when not right under it
 		if(mousePos != (Vector2)transform.position) transform.up = mousePos - (Vector2)transform.position;
+	
+		if(Input.GetKeyDown(KeyCode.U))
+		{
+			if(snakeLine != null) snakeLine.Grow();
+		}
 	}
 }
