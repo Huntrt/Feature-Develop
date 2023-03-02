@@ -19,6 +19,8 @@ public class SnakeBody : MonoBehaviour
 	{
 		//Renew all the segment
 		segments = new List<Transform>(); segmentPos = new List<Vector2>();
+		//Adding the head segment
+		segments.Add(head);
 		//Add head as the frist segment position
 		segmentPos.Add(head.position);
 		//Initilize all the segment needed
