@@ -8,15 +8,15 @@ public class SnakeLine : MonoBehaviour
 	public int initialSegment;
 	[SerializeField] float spacing;
 	public List<Vector2> segments = new List<Vector2>();
-	[SerializeField] List<Vector2> segmentPos = new List<Vector2>();
+	List<Vector2> segmentPos = new List<Vector2>();
 	[SerializeField] EdgeCollider2D collisionCollider, triggerCollider;
 
 	void OnEnable()
 	{
-		ResetPart();
+		ResetSegment();
 	}
 
-	public void ResetPart()
+	public void ResetSegment()
 	{
 		//Renew all the segment
 		segments = new List<Vector2>(); segmentPos = new List<Vector2>();
@@ -37,10 +37,10 @@ public class SnakeLine : MonoBehaviour
 	void LateUpdate()
 	{
 		//Only draw if segment pos for head exist
-		if(segmentPos.Count > 0) DrawLine();
+		if(segmentPos.Count > 0) DrawSegment();
 	}
 
-	public void DrawLine()
+	public void DrawSegment()
 	{
 		//Get distance between the head and the first segment
 		float dist = Vector2.Distance((Vector2)head.position, segmentPos[0]);
@@ -82,7 +82,7 @@ public class SnakeLine : MonoBehaviour
 		//Set line position for each segment
 		line.positionCount = segments.Count;
 		//Draw segment instantly after grow
-		DrawLine();
+		DrawSegment();
 	}
 
 	void SetColliderPoint()
