@@ -24,11 +24,11 @@ public class SnakeLine : MonoBehaviour
 		SetColliderPoint();
 		//Add head as the frist segment position
 		segmentPos.Add(head.position);
-		//Initilize all the segment needed
+		//Initilize all the segment needed at the lastest position
 		for (int i = 0; i < initialSegment; i++)
 		{
-			segments.Add(Vector2.zero);
-			segmentPos.Add(Vector2.zero);
+			segments.Add(segmentPos[segmentPos.Count-1]);
+			segmentPos.Add(segmentPos[segmentPos.Count-1]);
 		}
 		//Set line position for each segment
 		line.positionCount = segments.Count;

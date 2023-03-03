@@ -1924,7 +1924,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1313230415
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3231,7 +3231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   head: {fileID: 1808849255}
   line: {fileID: 1808849257}
-  initialSegment: 100
+  initialSegment: 10
   spacing: 0.2
   segments: []
   collisionCollider: {fileID: 0}
@@ -3517,7 +3517,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &2061726075
 SpriteRenderer:
   m_ObjectHideFlags: 0
