@@ -19,7 +19,9 @@ public class SnakeBody : MonoBehaviour
 
 	public void ResetSegment()
 	{
-		//Renew all the segment
+		//Destroy all the segemnt except head
+		for (int s = 1; s < segments.Count; s++) Destroy(segments[s].gameObject);
+		//Renew all the segment list and their position
 		segments = new List<Transform>(); segmentPos = new List<Vector2>();
 		//Adding the head segment
 		segments.Add(head);
