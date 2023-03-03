@@ -24,13 +24,13 @@ public class Snake_Testing : MonoBehaviour
 		//@ Grow and shrink snake if any of it method are active
 		if(Input.GetKey(KeyCode.U))
 		{
-			if(snakeLine.gameObject.activeInHierarchy) snakeLine.Grow();
-			if(snakeBody.gameObject.activeInHierarchy) snakeBody.Grow();
+			if(snakeLine != null) snakeLine.Grow();
+			if(snakeBody != null) snakeBody.Grow();
 		}
 		if(Input.GetKey(KeyCode.I))
 		{
-			if(snakeLine.gameObject.activeInHierarchy) snakeLine.Shrink();
-			if(snakeBody.gameObject.activeInHierarchy) snakeBody.Shrink();
+			if(snakeLine != null) snakeLine.Shrink();
+			if(snakeBody != null) snakeBody.Shrink();
 		}
 	}
 }
