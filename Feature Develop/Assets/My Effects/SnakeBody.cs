@@ -27,11 +27,13 @@ public class SnakeBody : MonoBehaviour
 		segments.Add(head);
 		//Add head as the frist segment position
 		segmentPos.Add(head.position);
-		//Initilize all the segment needed
+		//Go through how manay segment need to initialy create
 		for (int i = 0; i < initialSegment; i++)
 		{
+			//Use the previous segment pos for this segment
+			segmentPos.Add(segmentPos[segmentPos.Count-1]);
+			//Create an new segment body
 			CreateBodySegment();
-			segmentPos.Add(Vector2.zero);
 		}
 	}
 
@@ -64,9 +66,9 @@ public class SnakeBody : MonoBehaviour
 		{
 			//Lerping this segment to it previous segment using progress of distance
 			segments[b].position = Vector2.Lerp(segmentPos[b], segmentPos[b-1], dist/spacing);
-			//Get the direction of this segment look toward segment infront of it
-			Vector2 lookDirection = segmentPos[b+1] - segmentPos[b];
-			//@ Make this segment look toward using choosed it axis
+			//Get the direction of given index segment look toward segment infront of it
+			Vector2 lookDirection = segmentPos[b-1] - segmentPos[b];
+			//@ Make given index segment look toward using choosed it axis
 			switch((int)lookToward)
 			{
 				case 1: segments[b].up = lookDirection; break;
