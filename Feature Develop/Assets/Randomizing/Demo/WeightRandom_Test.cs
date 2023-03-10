@@ -5,7 +5,7 @@ public class WeightRandom_Test : MonoBehaviour
 {
     [System.Serializable] public class ColorWeight {public Color color; public float weight, apply;}
 	[SerializeField] ColorWeight[] colorTests;
-	[SerializeField] List<SpriteRenderer> coloringRenders = new List<SpriteRenderer>();
+	[SerializeField] SpriteRenderer[] coloringRenders;
 
 	void Start()
 	{
@@ -34,7 +34,7 @@ public class WeightRandom_Test : MonoBehaviour
 			sum += weights[w];
 		}
 		//Go through all the color render need to color
-		for (int r = 0; r < coloringRenders.Count; r++)
+		for (int r = 0; r < coloringRenders.Length; r++)
 		{
 			//This weighted color will be apply 
 			colorTests[WeightRandom.WeightingIndex(weights, sum)].apply++;
@@ -44,7 +44,7 @@ public class WeightRandom_Test : MonoBehaviour
 		//Which current color being use
 		int currentColor = 0;
 		//Go through all the render need to color
-		for (int r = 0; r < coloringRenders.Count; r++)
+		for (int r = 0; r < coloringRenders.Length; r++)
 		{
 			//Set this render color to be current color
 			coloringRenders[r].color = colorTests[currentColor].color;
@@ -57,5 +57,14 @@ public class WeightRandom_Test : MonoBehaviour
 				currentColor++; applyCount = 0;
 			}
 		}
+	}
+
+	[SerializeField] Transform renderGrid;
+	[SerializeField] bool GetRender;
+
+	void OnValidate() 
+	{
+		//Get all sprite render of render grid's children
+		if(GetRender) coloringRenders = renderGrid.GetComponentsInChildren<SpriteRenderer>();
 	}
 }
