@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/User Interface Expansion/Demo/User Interface Expansion_Demo.unity
     guid: 3773a7149e7011b4aa3c4cdc485f6d43
+  - enabled: 1
+    path: Assets/Randomizing/Demo/Randomizing_Demo.unity
+    guid: bf6cf381e37c3034e9eb85218d0afb68
   m_configObjects: {}
