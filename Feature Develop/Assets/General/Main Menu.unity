@@ -1650,7 +1650,7 @@ GameObject:
   - component: {fileID: 641850686}
   - component: {fileID: 641850685}
   m_Layer: 5
-  m_Name: Blank
+  m_Name: Randomizing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1690,8 +1690,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4405dbce859591c42aca9f0aed86aa13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: 
-  sceneName: 
+  description: 'Few function/algorithm for RNG.
+
+
+    <b>Weight Random:</b>
+
+    -
+    Given an array of float and it will return index of float that got randomly weighted.'
+  sceneName: Randomizing_Demo
   indicator: {fileID: 2146816370}
 --- !u!114 &641850686
 MonoBehaviour:
@@ -1808,7 +1814,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 641850686}
   m_OnClick:
     m_PersistentCalls:
@@ -1838,7 +1844,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.10196079, g: 0.10196079, b: 0.10196079, a: 0}
+  m_Color: {r: 0.10196079, g: 0.10196079, b: 0.10196079, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4189,7 +4195,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: Randomizing
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 38c5ece000f7dfa48b443c4631fd348f, type: 2}
   m_sharedMaterial: {fileID: -1644124483952720655, guid: 38c5ece000f7dfa48b443c4631fd348f,
