@@ -62,19 +62,19 @@ public class SnakeBody : MonoBehaviour
 		//Set the frist segment to be the head's position
 		if(segments.Count > 0) segments[0] = head.transform;
 		//Go through all the segment
-		for (int b = 1; b < segments.Count; b++)
+		for (int s = 1; s < segments.Count; s++)
 		{
 			//Lerping this segment to it previous segment using progress of distance
-			segments[b].position = Vector2.Lerp(segmentPos[b], segmentPos[b-1], dist/spacing);
+			segments[s].position = Vector2.Lerp(segmentPos[s], segmentPos[s-1], dist/spacing);
 			//Get the direction of given index segment look toward segment infront of it
-			Vector2 lookDirection = segmentPos[b-1] - segmentPos[b];
+			Vector2 lookDirection = segmentPos[s-1] - segmentPos[s];
 			//@ Make given index segment look toward using choosed it axis
 			switch((int)lookToward)
 			{
-				case 1: segments[b].up = lookDirection; break;
-				case 2: segments[b].up = -lookDirection; break;
-				case 3: segments[b].right = -lookDirection; break;
-				case 4: segments[b].right = lookDirection; break;
+				case 1: segments[s].up = lookDirection; break;
+				case 2: segments[s].up = -lookDirection; break;
+				case 3: segments[s].right = -lookDirection; break;
+				case 4: segments[s].right = lookDirection; break;
 			}
 		}
 	}
@@ -109,11 +109,19 @@ public class SnakeBody : MonoBehaviour
 
 	void DestroyBodySegment()
 	{
+		//Dont destroy if the last segment no longer exist
+		if(segments[segments.Count-1] == null) return;
 		//Destroy thr last segment
 		Destroy(segments[segments.Count-1].gameObject);
 		//Shrink the last segment 
 		segments.RemoveAt(segments.Count-1);
 		//Remove position of the last segment
 		segmentPos.RemoveAt(segmentPos.Count-1);
+	}
+
+	void OnDisable()
+	{
+		//Go through all the segment (except the head) to destroy them
+		for (int s = segments.Count - 1; s >= 1 ; s--) DestroyBodySegment();
 	}
 }
