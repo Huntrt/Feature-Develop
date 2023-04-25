@@ -74,3 +74,6 @@ crashlytics-build.properties
 desktop.ini
 Initialize Repository.bat
 [Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Feature don't care about unity version
+Feature Develop/ProjectSettings/ProjectVersion.txt
