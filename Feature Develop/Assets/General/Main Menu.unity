@@ -1417,7 +1417,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: "\rShowcasing some visual effect i has created.\r\n\r\n<b>Electric
     Line:</b>\r\n- Get random point between 2 line then move them randomly verticaly.\n\n<b>Polygon
-    Line:</b>\n- Draw line in an circle using vertex and custom size."
+    Line:</b>\n- Draw line in an circle using vertex and custom size.\n\n<b>Curve
+    Path:</b>\n- Draw an curve using an center vector between 2 vector"
   sceneName: My Effects_Demo
   indicator: {fileID: 989135438}
 --- !u!114 &601707384
