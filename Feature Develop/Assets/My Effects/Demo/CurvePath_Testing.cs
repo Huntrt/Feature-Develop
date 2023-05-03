@@ -36,4 +36,18 @@ public class CurvePath_Testing : MonoBehaviour
 		//Reset back to the current path if stray away too much from it next path
 		if(dist >= stray * 5) ship.position = paths[nextPath-1];
 	}
+
+	void OnDrawGizmos() 
+	{
+		//Go through all the vertex needed for gizmo
+		for (int v = 0; v < paths.Length; v++)
+		{
+			//Curve this vertex and use it as progress
+			paths[v] = CurvePath.Curve(start, curve, end, (float)v/(paths.Length-1), offset);
+			//Green gizmo
+			Gizmos.color = Color.green;
+			//Dont draw gizmo if this the first vertex
+			if(v > 0) Gizmos.DrawLine(paths[v], paths[v-1]);
+		}
+	}
 }
