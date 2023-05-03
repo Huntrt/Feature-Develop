@@ -4,14 +4,24 @@ public class CurvePath_Testing : MonoBehaviour
 {
     public Vector2 start, end, curve;
 	public float offset;
-	[SerializeField] LineRenderer line;
+	[SerializeField] Vector2[] gizmoVertex;
 
 	void Update()
 	{
-		for (int l = 0; l < line.positionCount; l++)
+		
+	}
+
+	void OnDrawGizmos() 
+	{
+		//Go through all the vertex needed for gizmo
+		for (int v = 0; v < gizmoVertex.Length; v++)
 		{
-			//Set curve for this line position with preset info
-			line.SetPosition(l, CurvePath.Curve(start, curve, end, (float)l/(line.positionCount-1), offset));
+			//Curve this vertex and use it as progress
+			gizmoVertex[v] = CurvePath.Curve(start, curve, end, (float)v/(gizmoVertex.Length-1), offset);
+			//Green gizmo
+			Gizmos.color = Color.green;
+			//Dont draw gizmo if this the first vertex
+			if(v > 0) Gizmos.DrawLine(gizmoVertex[v], gizmoVertex[v-1]);
 		}
 	}
 }
